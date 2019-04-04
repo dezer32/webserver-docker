@@ -36,6 +36,8 @@ services:
   redis:
     image: redis
     restart: always
+    ports:
+     - "${REDIS_LOCAL_PORT}:6379"
   composer:
     image: composer
     environment:
