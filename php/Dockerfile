@@ -53,6 +53,10 @@ RUN pecl install apcu \
 
 RUN wget https://phar.phpunit.de/phpunit.phar -O /usr/local/bin/phpunit \
     && chmod +x /usr/local/bin/phpunit
+    
+RUN curl -sS https://getcomposer.org/installer | php \
+        && mv composer.phar /usr/local/bin/ \
+        && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 
 RUN apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
