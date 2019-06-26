@@ -5,7 +5,8 @@ services:
     image: nginx
     restart: always
     volumes:
-     - ${NGINX_CONF_FILE}:/etc/nginx/conf.d/default.conf
+     - ${NGINX_CONF_FILE}:/etc/nginx/nginx.conf
+     - ${NGINX_SITE_CONF_FILE}:/etc/nginx/site-abailable
      - ${APP_LOCAL_HOST}:${APP_REMOTE_HOST}
     working_dir: ${APP_REMOTE_HOST}
     ports:
@@ -28,12 +29,11 @@ services:
     ports:
      - "${DB_LOCAL_PORT}:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=123456
-      - MYSQL_DATABASE=${DATABASE_NAME}
-      - MYSQL_USER=${DATABASE_USER}
-      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
+      - ${MYSQL_INIT_PATH}:/docker-entrypoint-initdb.d
       - ${MYSQL_LOCAL_PATH}:/var/lib/mysql
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
   adminer:
     image: adminer
     ports:
