@@ -5,9 +5,9 @@ services:
     image: nginx
     restart: always
     volumes:
-     - ${NGINX_CONF_FILE}:/etc/nginx/nginx.conf
-     - ${NGINX_COMMON_CONF}:/etc/nginx/common
-     - ${NGINX_SITE_CONF_FILE}:/etc/nginx/site-enable
+     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+     - ./nginx/common:/etc/nginx/common
+     - ./nginx/site-available:/etc/nginx/site-enable
      - ${LOCAL_SITES_PATH}:${REMOTE_SITES_PATH}
     ports:
      - "${WEB_LOCAL_PORT}:80"
@@ -32,8 +32,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ${MYSQL_INIT_PATH}:/docker-entrypoint-initdb.d
-      - ${MYSQL_LOCAL_PATH}:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+      - ./data/mysql:/var/lib/mysql
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
   adminer:
     image: adminer
