@@ -7,9 +7,8 @@ services:
     volumes:
      - ${NGINX_CONF_FILE}:/etc/nginx/nginx.conf
      - ${NGINX_COMMON_CONF}:/etc/nginx/common
-     - ${NGINX_SITE_CONF_FILE}:/etc/nginx/site-abailable
+     - ${NGINX_SITE_CONF_FILE}:/etc/nginx/site-enable
      - ${LOCAL_SITES_PATH}:${REMOTE_SITES_PATH}
-     - ${LOCAL_LOGS}:/var/log
     ports:
      - "${WEB_LOCAL_PORT}:80"
     working_dir: ${REMOTE_SITES_PATH}
@@ -17,14 +16,12 @@ services:
     build: ./php
     restart: always
     environment:
-     - COMPOSER_HOME=${COMPOSER_HOME}
-     - COMPOSER_CACHE_DIR=${COMPOSER_CACHE_DIR}
+     - COMPOSER_HOME=$HOME/${COMPOSER_HOME}
+     - COMPOSER_CACHE_DIR=$HOME/${COMPOSER_CACHE_DIR}
     volumes: 
      - ${LOCAL_SITES_PATH}:${REMOTE_SITES_PATH}
-     - ${LOCAL_BITRIX}/config/${ABS_DEV}/.settings.php:${REMOTE_SITES_PATH}/${ABS_DEV}/bitrix/.settings.php
-     - ${LOCAL_BITRIX}/config/${ABS_DEV}/dbconn.php:${REMOTE_SITES_PATH}/${ABS_DEV}/bitrix/php_interface/dbconn.php
-     - ${COMPOSER_HOME}:${COMPOSER_HOME}
-     - ${COMPOSER_CACHE_DIR}:${COMPOSER_CACHE_DIR}
+     - ~/${COMPOSER_HOME}:$HOME/${COMPOSER_HOME}
+     - ~/${COMPOSER_CACHE_DIR}:$HOME/${COMPOSER_CACHE_DIR}
     working_dir: ${REMOTE_SITES_PATH}
     command: "php-fpm"
   db:
@@ -37,7 +34,7 @@ services:
     volumes:
       - ${MYSQL_INIT_PATH}:/docker-entrypoint-initdb.d
       - ${MYSQL_LOCAL_PATH}:/var/lib/mysql
-    command: ['mysqld', '--character-set-server=utf8', '--collation-server=utf8mb4_unicode_ci']
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
   adminer:
     image: adminer
     ports:
