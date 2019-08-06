@@ -22,6 +22,9 @@ services:
      - ${LOCAL_SITES_PATH}:${REMOTE_SITES_PATH}
      - ~/${COMPOSER_HOME}:$HOME/${COMPOSER_HOME}
      - ~/${COMPOSER_CACHE_DIR}:$HOME/${COMPOSER_CACHE_DIR}
+     - ./bitrix/config/${DEV_1}/.settings.php:${REMOTE_SITES_PATH}/${DEV_1}/bitrix/
+     - ./bitrix/config/${DEV_1}/dbconn.php:${REMOTE_SITES_PATH}/${DEV_1}/bitrix/php_interface/
+     - ./bitrix/config/${DEV_1}/configurations:${REMOTE_SITES_PATH}/${DEV_1}/local/php_interface/configurations
     working_dir: ${REMOTE_SITES_PATH}
     command: "php-fpm"
   db:

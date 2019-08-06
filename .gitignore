@@ -1,3 +1,4 @@
 /data
 /.DS_Store
+/.idea
 /mysql/init/*-data-insert.sql
