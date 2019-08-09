@@ -39,7 +39,14 @@ RUN docker-php-ext-install \
             sockets \
             zip \
             pcntl \
-            ftp
+            ftp \
+            bcmath \
+            json \
+            ctype \
+            xml \
+            xmlrpc \
+            xmlwriter \
+            opcache
 
 RUN docker-php-ext-enable \
             redis \
