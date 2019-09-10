@@ -15,8 +15,13 @@ services:
   php:
     build: ./php
     restart: always
+    environment:
+     - COMPOSER_HOME=${COMPOSER_HOME}
+     - COMPOSER_CACHE_DIR=${COMPOSER_CACHE_DIR}
     volumes: 
      - ${APP_LOCAL_HOST}:${APP_REMOTE_HOST}
+     - ${COMPOSER_HOME}:${COMPOSER_HOME}
+     - ${COMPOSER_CACHE_DIR}:${COMPOSER_CACHE_DIR}
     working_dir: ${APP_REMOTE_HOST}
     command: "php-fpm"
   db:
