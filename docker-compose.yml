@@ -18,7 +18,9 @@ services:
     environment:
      - COMPOSER_HOME=${COMPOSER_HOME}
      - COMPOSER_CACHE_DIR=${COMPOSER_CACHE_DIR}
-    volumes: 
+     - XDEBUG_CONFIG="remote_host=host.docker.internal remote_enable=1"
+     - PHP_IDE_CONFIG="serverName=Docker"
+    volumes:
      - ${APP_LOCAL_HOST}:${APP_REMOTE_HOST}
      - ${COMPOSER_HOME}:${COMPOSER_HOME}
      - ${COMPOSER_CACHE_DIR}:${COMPOSER_CACHE_DIR}
@@ -35,7 +37,7 @@ services:
       - MYSQL_USER=${DATABASE_USER}
       - MYSQL_PASSWORD=${DATABASE_PASSWORD}
     volumes:
-      - ${MYSQL_LOCAL_PATH}:/var/lib/mysql
+      - mariadb:/var/lib/mysql
   adminer:
     image: adminer
     ports:
@@ -62,3 +64,5 @@ services:
      - ${APP_LOCAL_HOST}:${APP_REMOTE_HOST}
     working_dir: ${APP_REMOTE_HOST}
     command: yarn install
+volumes:
+  mariadb:

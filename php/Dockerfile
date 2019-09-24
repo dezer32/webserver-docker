@@ -24,9 +24,8 @@ RUN apt-get update \
     && docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu
 
 RUN pecl install redis \
-    && pecl install xdebug
-
-RUN docker-php-ext-install \
+    && pecl install xdebug-2.7.1 \
+    && docker-php-ext-install \
             iconv \
             mbstring \
             tokenizer \
@@ -46,24 +45,23 @@ RUN docker-php-ext-install \
             xml \
             xmlrpc \
             xmlwriter \
-            opcache
-
-RUN docker-php-ext-enable \
+            opcache \
+    && docker-php-ext-enable \
             redis \
             opcache \
-            xdebug
-
-RUN pecl install apcu \
+            xdebug \
+    && pecl install apcu \
     && pecl install apcu_bc-1.0.3 \
     && docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini \
     && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
 
 RUN wget https://phar.phpunit.de/phpunit.phar -O /usr/local/bin/phpunit \
-    && chmod +x /usr/local/bin/phpunit
-    
-RUN curl -sS https://getcomposer.org/installer | php \
-        && mv composer.phar /usr/local/bin/ \
-        && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+    && chmod +x /usr/local/bin/phpunit \
+    && curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/ \
+    && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+
+ADD ./php.ini /usr/local/etc/php/php.ini
 
 RUN apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
