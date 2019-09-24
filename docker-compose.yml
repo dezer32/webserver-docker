@@ -47,22 +47,5 @@ services:
     restart: always
     ports:
      - "${REDIS_LOCAL_PORT}:6379"
-  composer:
-    image: composer
-    environment:
-     - COMPOSER_HOME=${COMPOSER_HOME}
-     - COMPOSER_CACHE_DIR=${COMPOSER_CACHE_DIR}
-    volumes:
-     - ${COMPOSER_HOME}:${COMPOSER_HOME}
-     - ${COMPOSER_CACHE_DIR}:${COMPOSER_CACHE_DIR}
-     - ${APP_LOCAL_HOST}:${APP_REMOTE_HOST}
-    working_dir: ${APP_REMOTE_HOST}
-    command: composer install
-  node:
-    image: node
-    volumes:
-     - ${APP_LOCAL_HOST}:${APP_REMOTE_HOST}
-    working_dir: ${APP_REMOTE_HOST}
-    command: yarn install
 volumes:
   mariadb:
