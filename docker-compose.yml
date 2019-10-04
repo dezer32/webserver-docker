@@ -16,10 +16,10 @@ services:
     build: ./php
     restart: always
     environment:
-     - COMPOSER_HOME=${COMPOSER_HOME}
-     - COMPOSER_CACHE_DIR=${COMPOSER_CACHE_DIR}
-     - XDEBUG_CONFIG="remote_host=host.docker.internal remote_enable=1"
-     - PHP_IDE_CONFIG="serverName=Docker"
+     COMPOSER_HOME: "${COMPOSER_HOME}"
+     COMPOSER_CACHE_DIR: "${COMPOSER_CACHE_DIR}"
+     XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=1"
+     PHP_IDE_CONFIG: "serverName=Docker"
     volumes:
      - ${APP_LOCAL_HOST}:${APP_REMOTE_HOST}
      - ${COMPOSER_HOME}:${COMPOSER_HOME}
